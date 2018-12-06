@@ -1,26 +1,47 @@
-$('.images>img:nth-child(1)').addClass('current')
-$('.images>img:nth-child(1)').siblings().addClass('enter')
 
-let n = 1
+let n
+initial()
+
 setInterval(() => {
-
-    $('.images>img:nth-child(' + getNum(n) + ')').removeClass('current').addClass('leave')
-        .one('transitionend', function(e) {
-            $(e.currentTarget).removeClass('leave').addClass('enter')
+    makeLeave(getImage(n))
+        .one('transitionend', (e) => { 
+            makeEnter($(e.currentTarget)) 
         })
-    $('.images>img:nth-child(' + getNum(n+1) + ')').removeClass('enter').addClass('current')
-    
+    makeCurrent(getImage(n+1))    
     n += 1
-
 }, 2000)
 
-function getNum(num) {
+
+
+function initial() {
+    n = 1
+    $('.images>img:nth-child(' + n + ')').addClass('current')
+    $('.images>img:nth-child(' + n + ')').siblings().addClass('enter')
+}
+
+function makeCurrent($node) {
+    $node.removeClass('enter').addClass('current')
+}
+
+function makeLeave($node) {
+    return $node.removeClass('current').addClass('leave')
+}
+
+function makeEnter($node) {
+    $node.removeClass('leave').addClass('enter')
+}
+
+function getImage(n) {
+    return $('.images>img:nth-child(' + getNum(n) + ')')
+}
+
+function getNum(n) {
     let size = $('.images').children().length
-    if(num > size) {
-        num = num % size
+    if(n > size) {
+        n = n % size
     }
-    if(num == 0) {
-        num = size
+    if(n == 0) {
+        n = size
     }
-    return num
+    return n
 }
