@@ -15,8 +15,8 @@ setInterval(() => {
 
 function initial() {
     n = 1
-    $('.images>img:nth-child(' + n + ')').addClass('current')
-    $('.images>img:nth-child(' + n + ')').siblings().addClass('enter')
+    $(`.images>img:nth-child( ${n} )`).addClass('current')
+    $(`.images>img:nth-child( ${n} )`).siblings().addClass('enter')
 }
 
 function makeCurrent($node) {
@@ -32,7 +32,7 @@ function makeEnter($node) {
 }
 
 function getImage(n) {
-    return $('.images>img:nth-child(' + getNum(n) + ')')
+    return $(`.images>img:nth-child( ${getNum(n)} )`)
 }
 
 function getNum(n) {
