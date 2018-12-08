@@ -1,15 +1,26 @@
-
 let n
 initial()
+let timerId = setTimer()
 
-setInterval(() => {
-    makeLeave(getImage(n))
-        .one('transitionend', (e) => { 
-            makeEnter($(e.currentTarget)) 
-        })
-    makeCurrent(getImage(n+1))    
-    n += 1
-}, 2000)
+function setTimer() {
+    return setInterval(() => {
+        makeLeave(getImage(n))
+            .one('transitionend', (e) => {
+                makeEnter($(e.currentTarget))
+            })
+        makeCurrent(getImage(n+1))
+        n += 1
+    }, 2000)
+}
+
+// page visibility API
+$(document).on('visibilitychange', function() {
+    if(document.hidden) {
+        window.clearInterval(timerId)
+    }else {
+        timerId = setTimer()
+    }
+})
 
 
 
